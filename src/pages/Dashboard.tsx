@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../features/auth/AuthContext";
 import api from "../api/axios";
-import Header from "../components/Header";
+// import Header from '../components/Header';
+import HeaderMUI from "../components/HeaderMUI";
 import Sidebar from "../components/Sidebar";
 import MainContent from "../components/MainContent";
 import ProjectForm from "../components/ProjectForm";
@@ -13,6 +14,7 @@ interface Project {
   name: string;
   color: string;
 }
+
 interface Column {
   id: string;
   title: string;
@@ -29,7 +31,6 @@ export default function Dashboard() {
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  // GET — charger les données au montage
   useEffect(() => {
     async function fetchData() {
       try {
@@ -48,7 +49,6 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  // POST — ajouter un projet
   async function addProject(name: string, color: string) {
     setSaving(true);
     setError(null);
@@ -68,41 +68,18 @@ export default function Dashboard() {
     }
   }
 
-  // PUT — renommer un projet
-  async function renameProject(project: Project) {
-    const newName = prompt("Nouveau nom :", project.name);
-    if (!newName || newName === project.name) return;
-    const { data } = await api.put("/projects/" + project.id, {
-      ...project,
-      name: newName,
-    });
-    setProjects((prev) => prev.map((p) => (p.id === project.id ? data : p)));
-  }
-
-  // DELETE — supprimer un projet
-  async function deleteProject(id: string) {
-    if (!confirm("Êtes-vous sûr ?")) return;
-    await api.delete("/projects/" + id);
-    setProjects((prev) => prev.filter((p) => p.id !== id));
-  }
-
   if (loading) return <div className={styles.loading}>Chargement...</div>;
 
   return (
     <div className={styles.layout}>
-      <Header
+      <HeaderMUI
         title="TaskFlow"
-        onMenuClick={() => setSidebarOpen((p) => !p)}
+        onMenuClick={() => setSidebarOpen(p => !p)}
         userName={authState.user?.name}
         onLogout={() => dispatch({ type: "LOGOUT" })}
       />
       <div className={styles.body}>
-        <Sidebar
-          projects={projects}
-          isOpen={sidebarOpen}
-          onRename={renameProject}
-          onDelete={deleteProject}
-        />
+        <Sidebar projects={projects} isOpen={sidebarOpen} />
         <div className={styles.content}>
           <div className={styles.toolbar}>
             {!showForm ? (

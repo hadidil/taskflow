@@ -41,62 +41,27 @@
 .item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  text-align: left;
-  font-size: 14px;
-  color: #444444;
-  cursor: pointer;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
   text-decoration: none;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
+  color: inherit;
+  border-radius: 6px;
+  transition: background 0.2s;
 }
 
 .item:hover {
-  background-color: #f0f0f0;
-  color: #111111;
+  background: #f0f0f0;
 }
 
 .active {
-  background-color: #d1fae5;
-  color: #065f46;
+  background: #e6f4ec;
+  color: #1B8C3E;
   font-weight: 600;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
-}
-
-.actions {
-  display: flex;
-  gap: 2px;
-  margin-left: auto;
-  opacity: 0;
-  transition: opacity 0.15s ease;
-}
-
-li:hover .actions {
-  opacity: 1;
-}
-
-.actionBtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 12px;
-  padding: 2px 4px;
-  border-radius: 4px;
-  line-height: 1;
-}
-
-.actionBtn:hover {
-  background-color: rgba(0, 0, 0, 0.08);
 }
