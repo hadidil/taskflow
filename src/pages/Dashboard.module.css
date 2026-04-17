@@ -2,6 +2,7 @@
 .body { display: flex; flex: 1; overflow: hidden; } 
 .content { flex: 1; display: flex; flex-direction: column; overflow: auto; } 
 .toolbar { padding: 1rem; display: flex; gap: 0.5rem; align-items: center; } 
+.xssDemo { padding: 1rem; color: #9a3412; background: #fff7ed; border-bottom: 1px solid #fed7aa; }
 .addBtn { 
   padding: 0.5rem 1rem; background: #1B8C3E; color: white; 
   border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; 

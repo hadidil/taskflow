@@ -10,9 +10,13 @@ interface Project {
 interface SidebarProps {
   projects: Project[];
   isOpen: boolean;
+  onRename?: (project: Project) => void;
+  onDelete?: (id: string) => void;
 }
 
-export default function Sidebar({ projects, isOpen }: SidebarProps) {
+export default function Sidebar({ projects, isOpen, onRename, onDelete }: SidebarProps) {
+  console.log('Sidebar re-render');
+
   return (
     <aside
       className={`${styles.sidebar} ${isOpen ? styles.open : styles.closed}`}
@@ -21,15 +25,39 @@ export default function Sidebar({ projects, isOpen }: SidebarProps) {
       <ul className={styles.list}>
         {projects.map(p => (
           <li key={p.id}>
-            <NavLink
-              to={`/projects/${p.id}`}
-              className={({ isActive }) =>
-                `${styles.item} ${isActive ? styles.active : ''}`
-              }
-            >
-              <span className={styles.dot} style={{ background: p.color }} />
-              {p.name}
-            </NavLink>
+            <div className={styles.itemRow}>
+              <NavLink
+                to={`/projects/${p.id}`}
+                className={({ isActive }) =>
+                  `${styles.item} ${isActive ? styles.active : ''}`
+                }
+              >
+                <span className={styles.dot} style={{ background: p.color }} />
+                {p.name}
+              </NavLink>
+              {(onRename || onDelete) && (
+                <div className={styles.actions}>
+                  {onRename && (
+                    <button
+                      type="button"
+                      className={styles.actionBtn}
+                      onClick={() => onRename(p)}
+                    >
+                      Renommer
+                    </button>
+                  )}
+                  {onDelete && (
+                    <button
+                      type="button"
+                      className={styles.actionBtn}
+                      onClick={() => onDelete(p.id)}
+                    >
+                      Suppr.
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </li>
         ))}
       </ul>
