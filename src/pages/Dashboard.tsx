@@ -28,8 +28,6 @@ export default function Dashboard() {
     deleteProject,
   } = useProjects();
 
-  const dangerousName = '<img src=x onerror=alert("HACK")>';
-
   const handleRename = useCallback(
     (project: Project) => renameProject(project),
     [renameProject],
@@ -55,7 +53,7 @@ export default function Dashboard() {
     <div className={styles.layout}>
       <HeaderMUI
         title="TaskFlow"
-        onMenuClick={() => setSidebarOpen(p => !p)}
+        onMenuClick={() => setSidebarOpen((p) => !p)}
         userName={authState.user?.name}
         onLogout={() => dispatch(logout())}
       />
@@ -67,9 +65,6 @@ export default function Dashboard() {
           onDelete={handleDelete}
         />
         <div className={styles.content}>
-          <div className={styles.xssDemo}>
-            <p>{dangerousName}</p>
-          </div>
           <div className={styles.toolbar}>
             {!showForm ? (
               <button

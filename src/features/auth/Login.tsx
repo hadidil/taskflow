@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import api from '../../api/axios';
-import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch, RootState } from '../../store';
-import { loginFailure, loginStart, loginSuccess } from './authSlice';
-import styles from './Login.module.css';
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import api from "../../api/axios";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../store";
+import { loginFailure, loginStart, loginSuccess } from "./authSlice";
+import styles from "./Login.module.css";
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const state = useSelector((store: RootState) => store.auth);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const from = (location.state as any)?.from || '/dashboard';
+  const from = (location.state as any)?.from || "/dashboard";
 
   useEffect(() => {
     if (state.user) navigate(from, { replace: true });
@@ -26,19 +26,21 @@ export default function Login() {
     try {
       const { data: users } = await api.get(`/users?email=${email}`);
       if (users.length === 0 || users[0].password !== password) {
-        dispatch(loginFailure('Email ou mot de passe incorrect'));
+        dispatch(loginFailure("Email ou mot de passe incorrect"));
         return;
       }
       const { password: _, ...user } = users[0];
-      const fakeToken = btoa(JSON.stringify({
-        userId: user.id,
-        email: user.email,
-        role: 'admin',
-        exp: Date.now() + 3600000,
-      }));
+      const fakeToken = btoa(
+        JSON.stringify({
+          userId: user.id,
+          email: user.email,
+          role: "admin",
+          exp: Date.now() + 3600000,
+        }),
+      );
       dispatch(loginSuccess({ user, token: fakeToken }));
     } catch {
-      dispatch(loginFailure('Erreur serveur'));
+      dispatch(loginFailure("Erreur serveur"));
     }
   }
 
@@ -48,14 +50,28 @@ export default function Login() {
         <h1 className={styles.title}>TaskFlow</h1>
         <p className={styles.subtitle}>Connectez-vous pour continuer</p>
         {state.error && <div className={styles.error}>{state.error}</div>}
-        <input type="email" placeholder="Email"
-          value={email} onChange={e => setEmail(e.target.value)}
-          className={styles.input} required />
-        <input type="password" placeholder="Mot de passe"
-          value={password} onChange={e => setPassword(e.target.value)}
-          className={styles.input} required />
-        <button type="submit" className={styles.button} disabled={state.loading}>
-          {state.loading ? 'Connexion...' : 'Se connecter'}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={styles.input}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Mot de passe"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className={styles.input}
+          required
+        />
+        <button
+          type="submit"
+          className={styles.button}
+          disabled={state.loading}
+        >
+          {state.loading ? "Connexion..." : "Se connecter"}
         </button>
       </form>
     </div>

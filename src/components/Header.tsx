@@ -8,10 +8,7 @@ interface HeaderProps {
   onMenuClick: () => void;
 }
 
-export default function Header({
-  title,
-  onMenuClick,
-}: HeaderProps) {
+export default function Header({ title, onMenuClick }: HeaderProps) {
   const authState = useSelector((store: RootState) => store.auth);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -24,9 +21,14 @@ export default function Header({
         <h1 className={styles.logo}>{title}</h1>
       </div>
       <div className={styles.right}>
-        {authState.user && <span className={styles.userName}>{authState.user.name}</span>}
         {authState.user && (
-          <button className={styles.logoutBtn} onClick={() => dispatch(logout())}>
+          <span className={styles.userName}>{authState.user.name}</span>
+        )}
+        {authState.user && (
+          <button
+            className={styles.logoutBtn}
+            onClick={() => dispatch(logout())}
+          >
             Déconnexion
           </button>
         )}

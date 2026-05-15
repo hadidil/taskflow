@@ -62,7 +62,7 @@
 
 .active {
   background: #e6f4ec;
-  color: #1B8C3E;
+  color: #1b8c3e;
   font-weight: 600;
 }
 
@@ -82,8 +82,8 @@
 }
 
 .actionBtn:hover {
-  border-color: #1B8C3E;
-  color: #1B8C3E;
+  border-color: #1b8c3e;
+  color: #1b8c3e;
 }
 
 .dot {

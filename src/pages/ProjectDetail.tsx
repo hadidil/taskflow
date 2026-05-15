@@ -29,10 +29,7 @@ export default function ProjectDetail() {
 
   return (
     <div className={styles.layout}>
-      <Header
-        title="TaskFlow"
-        onMenuClick={() => navigate("/dashboard")}
-      />
+      <Header title="TaskFlow" onMenuClick={() => navigate("/dashboard")} />
       <main className={styles.main}>
         <div className={styles.header}>
           <span className={styles.dot} style={{ background: project.color }} />
